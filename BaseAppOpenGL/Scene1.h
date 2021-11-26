@@ -50,12 +50,14 @@ private:
 	CTexto			*pTexto;	// Objeto que gerencia texto
 	CTexture		*pTextures;	// Objeto que gerencia texturas
 	CTimer			*pTimer;	// Objeto que gerencia o timer
+	CTexture* smokeTextures;     // Objeto que gerencia textures da smoke
 
 
 	int		iFPS;			// FPS and FPS Counter
 	int		iFrames;		// FPS and FPS Counter
 	DWORD	ulLastFPS;		// FPS and FPS Counter
 	char	szTitle[256];	// FPS and FPS Counter
+	int     nextText;       // textureControl
 
 
 	bool bIsWireframe;	// Modos Wireframe/Solid

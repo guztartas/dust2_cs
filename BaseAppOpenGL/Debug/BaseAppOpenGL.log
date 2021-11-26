@@ -1,0 +1,3 @@
+﻿  Scene1.cpp
+C:\Users\Computação\Desktop\ProjetoDaTropa\BaseAppOpenGL\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::MeshEntry::BUFFERS' when no variable is declared
+  BaseAppOpenGL.vcxproj -> C:\Users\Computação\Desktop\ProjetoDaTropa\Debug\BaseAppOpenGL.exe

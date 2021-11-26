@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define NUM_TEXTURES 50
+#define NUM_TEXTURES 200
 #define MAX_TEXTURE_MIPS 14
 
 static GLenum faceTarget[6] = {
