@@ -52,7 +52,6 @@ private:
 	CTimer			*pTimer;	// Objeto que gerencia o timer
 	CTexture* smokeTextures;     // Objeto que gerencia textures da smoke
 
-
 	int		iFPS;			// FPS and FPS Counter
 	int		iFrames;		// FPS and FPS Counter
 	DWORD	ulLastFPS;		// FPS and FPS Counter
@@ -75,6 +74,7 @@ private:
 
 
 	CModel_ASSIMP* pModelASSIMP_1;
+	CModel_ASSIMP* pModelASSIMP_2;
 	Mesh* pVBOMesh;
 	CModel_3DS* pModel3DS;
 
@@ -82,8 +82,6 @@ private:
 	CTerreno* pTerreno;
 	CModel_3DS* pTerreno3DS;
 
-
-	
-
+	float fLowLight[4];
 };
 

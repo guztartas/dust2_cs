@@ -7,7 +7,7 @@ CScene1::CScene1()
 	pTexto = NULL;
 	pTextures = NULL;
 	smokeTextures = NULL;
-	
+
 	bIsWireframe = false;
 	bIsCameraFPS = true;
 
@@ -22,7 +22,7 @@ CScene1::CScene1()
 	pTexto = new CTexto();
 
 	// Cria camera
-	pCamera = new CCamera(12.0f, 1.0f, -150.0f, 0.5f);
+	pCamera = new CCamera(289.0f, 22.0f, -67.44f, 0.9f);
 
 	// Cria o Timer
 	pTimer = new CTimer();
@@ -41,6 +41,7 @@ CScene1::CScene1()
 	pTextures->CreateTextureMipMap(4, "../Scene1/left.bmp");
 	pTextures->CreateTextureMipMap(5, "../Scene1/right.bmp");
 	pTextures->CreateTextureMipMap(6, "../Scene1/terreno.bmp");
+	pTextures->CreateTextureMipMap(7, "../Scene1/Dust2/textures/window.jpg");
 	glPopAttrib();
 
 	glPushAttrib(GL_TEXTURE_BIT);
@@ -157,6 +158,13 @@ CScene1::CScene1()
 	pModelASSIMP_1 = NULL;
 	pModelASSIMP_1 = new CModel_ASSIMP(CModel_ASSIMP::IMMEDIATE, "../Scene1/Dust2/d2.obj");
 
+	pModelASSIMP_2 = NULL;
+	pModelASSIMP_2 = new CModel_ASSIMP(CModel_ASSIMP::IMMEDIATE, "../Scene1/Dust2/byBox.obj");
+
+	fLowLight[0] = 0.5;
+	fLowLight[1] = 0.5;
+	fLowLight[2] = 0.5;
+	fLowLight[3] = 1.0;
 }
 
 
@@ -198,6 +206,11 @@ CScene1::~CScene1(void)
 		pModelASSIMP_1 = NULL;
 	}
 
+	if (pModelASSIMP_2)
+	{
+		delete pModelASSIMP_2;
+		pModelASSIMP_2 = NULL;
+	}
 }
 
 
@@ -246,19 +259,48 @@ int CScene1::DrawGLScene(void)	// Função que desenha a cena
 
 	CreateSkyBox(0.0f, 100.0f, 0.0f, 1500.0f, 1500.0f, 1500.0f, pTextures);
 
-	pTextures->ApplyTexture(6);
+	glEnable(GL_FOG);
+	glFogfv(GL_FOG_COLOR, fLowLight);
+	glFogf(GL_FOG_START, -500.0f);
+	glFogf(GL_FOG_END, 500.0f);
+	glFogi(GL_FOG_MODE, GL_LINEAR);
 
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -150.0f);
+	glScalef(20.0f, 20.0f, 20.0f);
 		pModelASSIMP_1->Draw();
 	glPopMatrix();	
+
+	glPushMatrix();
+	glTranslatef(399.29f, -11.8f, -168.5f);
+	glScalef(5.0f, 5.0f, 5.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+		pModelASSIMP_2->Draw();
+	glPopMatrix();
 
 	// SMOKE
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+
+	pTextures->ApplyTexture(7);
+	glPushMatrix();
+	glTranslatef(272.9f, 49.8f, -203.0f);
+	glBegin(GL_QUADS);
+	glScalef(5.0f, 5.0f, 5.0f);
+
+
+	glTexCoord2d(0.0f, 0.0f); glVertex3f(1.5f, -1.3f, 3.0f);
+	glTexCoord2d(0.0f, 1.0f); glVertex3f(1.5f, -1.3f, -3.20f);
+	glTexCoord2d(1.0f, 1.0f); glVertex3f(1.5f, 5.1f, -3.20f);
+	glTexCoord2d(1.0f, 0.0f); glVertex3f(1.5f, 5.1f, 3.0f);
+
+	glEnd();
+	glPopMatrix();
+
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	
+
 	if (pTimer->GetTime() >= 20)
 	{
 		nextText++;
@@ -278,22 +320,23 @@ int CScene1::DrawGLScene(void)	// Função que desenha a cena
 		pCamera->Right[0],      pCamera->Right[1],	  pCamera->Right[2],	0.0f,
 		pCamera->Up[0],         pCamera->Up[1],		  pCamera->Up[2],		0.0f,
 		pCamera->Forward[0],    pCamera->Forward[1],  pCamera->Forward[2],	0.0f,
-		13.0f,					-0.8f,				  -151.68f,				1.0f
+		262.29f,					20.15f,				  -178.68f,				1.0f
 	};
 
 	glMultMatrixf(matrixBillboard);
 
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-5.0f, 0.0f, 0.0f);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(5.0f, 0.0f, 0.0f);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(5.0f, 10.0f, 0.0f);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-5.0f, 10.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-60.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(60.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(60.0f, 120.0f, 0.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-60.0f, 120.0f, 0.0f);
 
 	glEnd();
 	glPopMatrix();
-	glDisable(GL_BLEND);
 
+	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_FOG);
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                               DESENHA OS OBJETOS DA CENA (FIM)
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
